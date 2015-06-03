@@ -1,23 +1,25 @@
-package edu.washington.apache78.FlashStudy;
+package edu.washington.apache78.FlashStudy.activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import edu.washington.apache78.FlashStudy.R;
 
-public class UploadSuccessActivity extends ActionBarActivity {
+
+public class UploadFailedActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload_success);
+        setContentView(R.layout.activity_upload_failed);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_upload_success, menu);
+        getMenuInflater().inflate(R.menu.menu_upload_failed, menu);
         return true;
     }
 

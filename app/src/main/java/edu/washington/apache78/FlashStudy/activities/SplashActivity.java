@@ -1,13 +1,13 @@
-package edu.washington.apache78.FlashStudy;
+package edu.washington.apache78.FlashStudy.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.os.Handler;
-import java.util.logging.LogRecord;
+
+import edu.washington.apache78.FlashStudy.R;
 
 
 public class SplashActivity extends Activity {
@@ -35,6 +35,7 @@ public class SplashActivity extends Activity {
     public void nextActivity(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.fade_in,0);
 
     }
 

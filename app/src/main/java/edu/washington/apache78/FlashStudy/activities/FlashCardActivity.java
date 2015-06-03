@@ -1,9 +1,11 @@
-package edu.washington.apache78.FlashStudy;
+package edu.washington.apache78.FlashStudy.activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import edu.washington.apache78.FlashStudy.R;
 
 
 public class FlashCardActivity extends ActionBarActivity {
