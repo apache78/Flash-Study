@@ -9,10 +9,11 @@ import edu.washington.apache78.FlashStudy.models.*;
  * Created by Stanley on 6/5/2015.
  */
 public class NoteTxtParser extends NoteParser {
+
 	@Override
 	public SuccessCode parse(String content) throws NoteParserException {
 		Scanner s = new Scanner(content);
-		Note note = new Note();
+		note = new Note();
 
 		//get note title
 		String[] tokens = s.nextLine().split(":", 2);

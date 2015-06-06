@@ -1,7 +1,7 @@
 package edu.washington.apache78.FlashStudy.includes.sources;
 
 /**
- * Created by Stanley on 6/5/2015.
+ * This is an abstract class served to provide common functionalities for retrieving note files.
  */
 public abstract class NoteSource {
 	public enum ErrorCode {
@@ -25,8 +25,8 @@ public abstract class NoteSource {
 
 	public abstract void fetch(Callback cb);
 
-	public static interface Callback {
-		public void failed(ErrorCode errorCode);
-		public void success(String content);
+	public static class Callback {
+		public void failed(ErrorCode errorCode) {}
+		public void success(String content) {}
 	}
 }

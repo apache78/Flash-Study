@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.*;
 
 /**
- * Created by Stanley on 6/5/2015.
+ * This inheritance to NoteSource can retrieve a note file from the internet through the HTTP protocol.
  */
 public class NoteUrlSource extends NoteSource {
 	private String url;
@@ -13,6 +13,7 @@ public class NoteUrlSource extends NoteSource {
 		this.url = url;
 	}
 
+	@Override
 	public void fetch(final Callback cb) {
 		Runnable asyncDownload = new Runnable() {
 			public void run() {

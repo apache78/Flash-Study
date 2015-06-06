@@ -5,7 +5,10 @@ import edu.washington.apache78.FlashStudy.includes.sources.*;
 import edu.washington.apache78.FlashStudy.models.*;
 
 /**
- * Created by Stanley on 6/5/2015.
+ * This class serves as the main entrance for downloading/retrieving a note file and parsing it.
+ * To use this class, you'll need to initialize a NoteSource. With that NoteSource, this class will then
+ * fetch the note file and try to parse it with every parser we have available. You can get feedback to the
+ * downloading of parsing tasks by passing in a creating a callback listerner in fetch().
  */
 public class NoteProvider {
 	private final NoteSource noteSource;
@@ -19,6 +22,7 @@ public class NoteProvider {
 		this.noteSource = source;
 	}
 
+	//the function that does everything.
 	public void fetch(final Callback cb) {
 		noteSource.fetch(new NoteSource.Callback() {
 			@Override
@@ -36,6 +40,9 @@ public class NoteProvider {
 						NoteParser.SuccessCode successCode = parser.parse(content);
 						Note note = parser.getNote();
 
+						//add note to our notes collection
+						NotesManager.getInstance().addNote(note);
+
 						//call callback
 						cb.success(note, successCode);
 						return;
@@ -52,9 +59,9 @@ public class NoteProvider {
 		});
 	}
 
-	public interface Callback {
-		public void sourceFailed(NoteSource.ErrorCode errorCode);
-		public void parserFailed();
-		public void success(Note note, NoteParser.SuccessCode parserResult);
+	public static class Callback {
+		public void sourceFailed(NoteSource.ErrorCode errorCode) { }
+		public void parserFailed() { }
+		public void success(Note note, NoteParser.SuccessCode parserResult) { }
 	}
 }
