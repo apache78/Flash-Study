@@ -12,9 +12,6 @@ public abstract class NoteParser {
 		OK,
 		PARTIAL
 	};
-	public enum ErrorCode {
-		OK,
-	}
 
 	protected String content = null;
 	protected Note note = null;
@@ -23,15 +20,6 @@ public abstract class NoteParser {
 
 	public NoteParser(String content) {
 		this.content = content;
-	}
-
-	public static String getResultDescription(ErrorCode resultCode) {
-		switch(resultCode) {
-			case OK:
-				return "Note successfully parsed!";
-			default:
-				return "Unknown error";
-		}
 	}
 
 	public static String getResultDescription(SuccessCode resultCode) {

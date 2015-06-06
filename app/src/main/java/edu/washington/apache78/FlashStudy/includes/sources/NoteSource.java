@@ -10,7 +10,7 @@ public abstract class NoteSource {
 		CONTENT_UNAVAILABLE
 	};
 
-	public String getResultDescription(ErrorCode errorCode) {
+	public static String getResultDescription(ErrorCode errorCode) {
 		switch(errorCode) {
 			case OK:
 				return "No Error";

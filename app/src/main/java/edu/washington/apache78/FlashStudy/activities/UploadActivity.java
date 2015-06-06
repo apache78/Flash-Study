@@ -2,10 +2,14 @@ package edu.washington.apache78.FlashStudy.activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.*;
+import android.widget.*;
 
 import edu.washington.apache78.FlashStudy.R;
+import edu.washington.apache78.FlashStudy.includes.*;
+import edu.washington.apache78.FlashStudy.includes.parsers.NoteParser;
+import edu.washington.apache78.FlashStudy.includes.sources.*;
+import edu.washington.apache78.FlashStudy.models.Note;
 
 
 public class UploadActivity extends ActionBarActivity {
@@ -14,6 +18,44 @@ public class UploadActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
+
+        ((Button)findViewById(R.id.downloadBtn)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NoteProvider provider = new NoteProvider(new NoteUrlSource("http://students.washington.edu/stahsieh/vocab.txt"));
+                provider.fetch(new NoteProvider.Callback() {
+                    @Override
+                    public void sourceFailed(final NoteSource.ErrorCode errorCode) {
+	                    UploadActivity.this.runOnUiThread(new Runnable() {
+		                    @Override
+		                    public void run() {
+			                    Toast.makeText(UploadActivity.this, NoteSource.getResultDescription(errorCode), Toast.LENGTH_SHORT);
+		                    }
+	                    });
+                    }
+
+                    @Override
+                    public void parserFailed() {
+	                    UploadActivity.this.runOnUiThread(new Runnable() {
+		                    @Override
+		                    public void run() {
+			                    Toast.makeText(UploadActivity.this, "We're unable to parse the note file!", Toast.LENGTH_SHORT);
+		                    }
+	                    });
+                    }
+
+                    @Override
+                    public void success(Note note, NoteParser.SuccessCode parserResult) {
+	                    UploadActivity.this.runOnUiThread(new Runnable() {
+		                    @Override
+		                    public void run() {
+			                    Toast.makeText(UploadActivity.this, "Works!", Toast.LENGTH_SHORT);
+		                    }
+	                    });
+                    }
+                });
+            }
+        });
     }
 
     @Override

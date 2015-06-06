@@ -29,28 +29,32 @@ public class NoteProvider {
 			@Override
 			public void success(String content) {
 				//content downloaded, let's try to parse it
+				//let's try to parse the content with all the parsers we have
 				for(Class<NoteParser> Parser : parsers) {
 					try {
-						//let's try to parse the content with all the parsers we have
 						NoteParser parser = Parser.newInstance();
 						NoteParser.SuccessCode successCode = parser.parse(content);
 						Note note = parser.getNote();
 
 						//call callback
 						cb.success(note, successCode);
+						return;
+
+					//if a parser fails, goes on to the next
 					} catch (InstantiationException e) {
 					} catch (IllegalAccessException e) {
-					} catch (NoteParserException e) {
-
-					}
+					} catch (NoteParserException e) { }
 				}
+
+				//if all parsers fail, we don't know how to parse this file
+				cb.parserFailed();
 			}
 		});
 	}
 
 	public interface Callback {
 		public void sourceFailed(NoteSource.ErrorCode errorCode);
-		public void parserFailed(NoteParser.ErrorCode errorCode);
+		public void parserFailed();
 		public void success(Note note, NoteParser.SuccessCode parserResult);
 	}
 }

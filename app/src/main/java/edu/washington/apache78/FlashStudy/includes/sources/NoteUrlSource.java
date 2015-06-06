@@ -7,7 +7,6 @@ import java.net.*;
  * Created by Stanley on 6/5/2015.
  */
 public class NoteUrlSource extends NoteSource {
-	private Callback cb;
 	private String url;
 
 	public NoteUrlSource(String url) {
@@ -22,13 +21,14 @@ public class NoteUrlSource extends NoteSource {
 					//create stream
 					URL u = new URL(url);
 					is = u.openStream();
-					DataInputStream dis = new DataInputStream(new BufferedInputStream(is));
+					DataInputStream dis = new DataInputStream(is);
 
 					//download data
 					StringBuilder sb = new StringBuilder();
+					int len;
 					byte[] buffer = new byte[1024];
-					while (dis.read(buffer) > 0) {
-						sb.append(buffer);
+					while ((len = dis.read(buffer)) > 0) {
+						sb.append(new String(buffer), 0, len);
 					}
 
 					//call callback

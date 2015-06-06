@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class Note {
     private String title;
     private String description;
-    private HashMap<String, String> cards;
+    private HashMap<String, String> cards = new HashMap<String, String>();
 
     public String getTitle() {
         return title;
