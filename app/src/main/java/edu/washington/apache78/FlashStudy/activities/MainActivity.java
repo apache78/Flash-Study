@@ -1,21 +1,36 @@
 package edu.washington.apache78.FlashStudy.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import edu.washington.apache78.FlashStudy.R;
 
 
 public class MainActivity extends ActionBarActivity {
-
+    Button driveButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().setElevation(0);
         // Enable Local Datastore.
+
+        driveButton = (Button) findViewById(R.id.driveButton);
+
+        driveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent driveAuthenticate = new Intent(MainActivity.this, GoogleDriveActivity.class);
+                startActivity(driveAuthenticate);
+            }
+        });
+
+
 
     }
 

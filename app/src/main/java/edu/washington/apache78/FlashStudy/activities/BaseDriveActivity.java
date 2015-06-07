@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -24,6 +25,17 @@ public abstract class BaseDriveActivity extends Activity implements
         GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "BaseDriveActivity";
+
+    /**
+     * DriveId of an existing folder to be used as a parent folder in
+     * folder operations samples.
+     */
+    public static final String EXISTING_FOLDER_ID = "0B2EEtIjPUdX6MERsWlYxN3J6RU0";
+
+    /**
+     * DriveId of an existing file to be used in file operation samples..
+     */
+    public static final String EXISTING_FILE_ID = "0ByfSjdPVs9MZTHBmMVdSeWxaNTg";
 
     /**
      * Extra for account name.
@@ -43,47 +55,7 @@ public abstract class BaseDriveActivity extends Activity implements
     /**
      * Google API client.
      */
-    protected GoogleApiClient mGoogleApiClient;
-
-    /**
-     * Selected account name to authorize the app for and authenticate the
-     * client with.
-     */
-    protected String mAccountName;
-
-    /**
-     * Called on activity creation. Handlers {@code EXTRA_ACCOUNT_NAME} for
-     * handle if there is one set. Otherwise, looks for the first Google account
-     * on the device and automatically picks it for client connections.
-     */
-    @Override
-    protected void onCreate(Bundle b) {
-        super.onCreate(b);
-        if (b != null) {
-            mAccountName = b.getString(EXTRA_ACCOUNT_NAME);
-        }
-        if (mAccountName == null) {
-            mAccountName = getIntent().getStringExtra(EXTRA_ACCOUNT_NAME);
-        }
-
-        if (mAccountName == null) {
-            Account[] accounts = AccountManager.get(this).getAccountsByType("com.google");
-            if (accounts.length == 0) {
-                Log.d(TAG, "Must have a Google account installed");
-                return;
-            }
-            mAccountName = accounts[0].name;
-        }
-    }
-
-    /**
-     * Saves the activity state.
-     */
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString(EXTRA_ACCOUNT_NAME, mAccountName);
-    }
+    private GoogleApiClient mGoogleApiClient;
 
     /**
      * Called when activity gets visible. A connection to Drive services need to
@@ -94,16 +66,14 @@ public abstract class BaseDriveActivity extends Activity implements
     @Override
     protected void onResume() {
         super.onResume();
-        if (mAccountName == null) {
-            return;
-        }
-        // TODO: Don't set account name explicitly and remove required
-        // permissions to query available accounts.
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
-                    .addApi(Drive.API).addScope(Drive.SCOPE_FILE)
-                    .setAccountName(mAccountName).addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this).build();
+                    .addApi(Drive.API)
+                    .addScope(Drive.SCOPE_FILE)
+                    .addScope(Drive.SCOPE_APPFOLDER) // required for App Folder sample
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .build();
         }
         mGoogleApiClient.connect();
     }
@@ -157,6 +127,7 @@ public abstract class BaseDriveActivity extends Activity implements
     public void onConnectionFailed(ConnectionResult result) {
         Log.i(TAG, "GoogleApiClient connection failed: " + result.toString());
         if (!result.hasResolution()) {
+            // show the localized error dialog.
             GooglePlayServicesUtil.getErrorDialog(result.getErrorCode(), this, 0).show();
             return;
         }
@@ -165,5 +136,19 @@ public abstract class BaseDriveActivity extends Activity implements
         } catch (SendIntentException e) {
             Log.e(TAG, "Exception while starting resolution activity", e);
         }
+    }
+
+    /**
+     * Shows a toast message.
+     */
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * Getter for the {@code GoogleApiClient}.
+     */
+    public GoogleApiClient getGoogleApiClient() {
+        return mGoogleApiClient;
     }
 }

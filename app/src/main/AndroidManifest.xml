@@ -42,6 +42,18 @@
             android:name=".activities.BaseDriveActivity"
             android:label="@string/title_activity_base_drive" >
         </activity>
+        <activity
+            android:name=".activities.GoogleDriveActivity"
+            android:label="@string/title_activity_google_drive" >
+        </activity>
+        <activity
+            android:name=".activities.RetrieveContentsWithProgressDialogActivity"
+            android:label="@string/title_activity_retrieve_contents_with_progress_dialog" >
+        </activity>
+        <activity
+            android:name=".activities.RetrieveContentsActivity"
+            android:label="@string/title_activity_retrieve_contents" >
+        </activity>
     </application>
 
 </manifest>

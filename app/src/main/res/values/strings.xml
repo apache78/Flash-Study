@@ -14,4 +14,9 @@
     <string name="parse_application_id">9wgVDMqeMvViTIIE2i36qzzsscv5PjhCfFnXYDrM</string>
     <string name="parse_client_key">wEORScGCYykQ1no5N4RbHkzN4RcCzVQNr6437249</string>
     <string name="title_activity_base_drive">BaseDriveActivity</string>
+    <string name="title_activity_google_drive">GoogleDriveActivity</string>
+    <string name="title_activity_retrieve_contents_with_progress_dialog">
+        RetrieveContentsWithProgressDialogActivity
+    </string>
+    <string name="title_activity_retrieve_contents">RetrieveContentsActivity</string>
 </resources>
