@@ -56,7 +56,7 @@ public class RetrieveContentsWithProgressDialogActivity extends BaseDriveActivit
 
         // If there is a selected file, open its contents.
         if (mSelectedFileDriveId != null) {
-            open();
+            showMessage("File ID: "+mSelectedFileDriveId.encodeToString());
             return;
         }
 
@@ -83,37 +83,7 @@ public class RetrieveContentsWithProgressDialogActivity extends BaseDriveActivit
         }
     }
 
-    private void open() {
-        // Reset progress dialog back to zero as we're
-        // initiating an opening request.
-        mProgressBar.setProgress(0);
-        DownloadProgressListener listener = new DownloadProgressListener() {
-            @Override
-            public void onProgress(long bytesDownloaded, long bytesExpected) {
-                // Update progress dialog with the latest progress.
-                int progress = (int)(bytesDownloaded*100/bytesExpected);
-                Log.d(TAG, String.format("Loading progress: %d percent", progress));
-                mProgressBar.setProgress(progress);
-            }
-        };
-        Drive.DriveApi.getFile(getGoogleApiClient(), mSelectedFileDriveId)
-                .open(getGoogleApiClient(), DriveFile.MODE_READ_ONLY, listener)
-                .setResultCallback(driveContentsCallback);
-        mSelectedFileDriveId = null;
-    }
 
-    private ResultCallback<DriveContentsResult> driveContentsCallback =
-            new ResultCallback<DriveContentsResult>() {
-                @Override
-                public void onResult(DriveContentsResult result) {
-                    if (!result.getStatus().isSuccess()) {
-                        showMessage("Error while opening the file contents");
-                        return;
-                    }
-                    showMessage("File contents opened");
-                    Intent retrieveContents = new Intent(RetrieveContentsWithProgressDialogActivity.this, MainActivity.class);
-                    startActivity(retrieveContents);
 
-                }
-            };
+
 }
