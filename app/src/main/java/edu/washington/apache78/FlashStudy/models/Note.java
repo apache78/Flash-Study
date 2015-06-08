@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class Note {
     private String title;
     private String description;
-    private HashMap<String, String> cards;
+    private ArrayList<Card> cards;
 
     public String getTitle() {
         return title;
@@ -27,11 +27,9 @@ public class Note {
         this.description = description;
     }
 
-    public void addCard(String term, String definition){
-        cards.put(term, definition);
+    public void addCard(Card card){
+        cards.add(card);
     }
 
-    public void editCard(String term, String definition){
-        cards.put(term, definition);
-    }
+
 }
