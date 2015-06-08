@@ -80,7 +80,7 @@ public class RetrieveContentsWithProgressDialogActivity extends BaseDriveActivit
         // no files selected by the user.
         IntentSender intentSender = Drive.DriveApi
                 .newOpenFileActivityBuilder()
-                .setMimeType(new String[]{ "text/plain", "text/vnd.google-apps.document" })
+                .setMimeType(new String[]{ "text/plain"})
                 .build(getGoogleApiClient());
         try {
             startIntentSenderForResult(intentSender, REQUEST_CODE_OPENER, null, 0, 0, 0);
@@ -143,7 +143,7 @@ public class RetrieveContentsWithProgressDialogActivity extends BaseDriveActivit
 
                 return;
             }
-            showMessage("File contents: " + result);
+            //showMessage("File contents: " + result);
             Intent goToConvertNoteActivity = new Intent(RetrieveContentsWithProgressDialogActivity.this, ConvertNoteActivity.class);
             goToConvertNoteActivity.putExtra("noteContent",result);
             startActivity(goToConvertNoteActivity);
