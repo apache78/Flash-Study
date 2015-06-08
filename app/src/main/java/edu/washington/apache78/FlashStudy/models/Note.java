@@ -8,8 +8,16 @@ import java.util.HashMap;
  */
 public class Note {
     private String title;
-    private String description;
-    private ArrayList<Card> cards;
+    private String content;
+    private ArrayList<Card> cards = new ArrayList<Card>();
+
+    public Note(String content) {
+        this.content = content;
+    }
+    public Note(){
+        this.title = "";
+        this.content="";
+    }
 
     public String getTitle() {
         return title;
@@ -20,11 +28,11 @@ public class Note {
     }
 
     public String getDescription() {
-        return description;
+        return content;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescription(String content) {
+        this.content = content;
     }
 
     public void addCard(Card card){
