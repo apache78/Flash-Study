@@ -3,9 +3,11 @@ package edu.washington.apache78.FlashStudy.activities;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import edu.washington.apache78.FlashStudy.R;
 
@@ -17,9 +19,19 @@ public class ConvertNoteActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_convert_note);
         Intent receivedContent  = getIntent();
+        String receivedTxt = receivedContent.getExtras().getString("noteContent");
 
         contentField = (EditText) findViewById(R.id.noteContentBody);
-        contentField.setText(receivedContent.getExtras().getString("noteContent"));
+        contentField.setText(receivedTxt);
+
+        String textStr[] = receivedTxt.split("[\r\n][\n]+");
+
+        for(int i=0; i<textStr.length; i++){
+            Log.i("====", textStr[i]);
+        }
+
+
+        Toast.makeText(this,String.valueOf(textStr.length), Toast.LENGTH_LONG).show();
 
 
     }
@@ -44,5 +56,9 @@ public class ConvertNoteActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    private static int countLines(String str){
+        String[] lines = str.split("\r\n|\r|\n");
+        return  lines.length;
     }
 }

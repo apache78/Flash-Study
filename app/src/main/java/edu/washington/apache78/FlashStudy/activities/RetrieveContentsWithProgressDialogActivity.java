@@ -119,7 +119,7 @@ public class RetrieveContentsWithProgressDialogActivity extends BaseDriveActivit
             String line;
             try {
                 while ((line = reader.readLine()) != null) {
-                    builder.append(line);
+                    builder.append(line+"\n");
                 }
                 contents = builder.toString();
             } catch (IOException e) {
