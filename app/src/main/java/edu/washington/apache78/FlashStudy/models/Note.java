@@ -5,26 +5,13 @@ import java.util.ArrayList;
 /**
  * Created by ShijirHome on 6/3/15.
  */
+
 public class Note implements Cloneable, Comparable<Note> {
-	private String title;
-	private String description;
+	//since this is a model, we'll set these attributes to public
+	public String title;
+	public String description;
+
 	private ArrayList<Card> cards = new ArrayList<Card>();
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 	public boolean containCard(String term) {
 		return cards.contains(new Card(term));

@@ -12,22 +12,23 @@ public class NoteTxtParser extends NoteParser {
 
 	@Override
 	public SuccessCode parse(String content) throws NoteParserException {
-		Scanner s = new Scanner(content);
+		//note is a class member. It can be retrieved through getNote()
 		note = new Note();
+		Scanner s = new Scanner(content);
 
 		//get note title
 		String[] tokens = s.nextLine().split(":", 2);
 		if(tokens.length != 2 || !tokens[0].trim().toLowerCase().equals("title")) {
 			throw new NoteParserException();
 		}
-		note.setTitle(tokens[1].trim());
+		note.title = tokens[1].trim();
 
 		//get note description
 		tokens = s.nextLine().split(":", 2);
 		if(tokens.length != 2 || !tokens[0].trim().toLowerCase().equals("description")) {
 			throw new NoteParserException();
 		}
-		note.setTitle(tokens[1].trim());
+		note.title = tokens[1].trim();
 
 		//we should have a blank line here
 		if(!s.nextLine().equals("")) {
@@ -43,8 +44,25 @@ public class NoteTxtParser extends NoteParser {
 				continue;
 			}
 
+			//read in more lines
+			StringBuilder sbDef = new StringBuilder(tokens[1]);
+			while(s.hasNextLine()) {
+				String nextLine = s.nextLine();
+				if(!nextLine.equals("")) {
+					sbDef.append(nextLine);
+				} else {
+					//we're moving on to the next term:def set
+					break;
+				}
+			}
+
 			//add term
-			note.addCard(tokens[0], tokens[1]);
+			note.addCard(tokens[0], sbDef.toString());
+		}
+
+		//did we add any cards?
+		if(note.getCards().size() == 0) {
+			return SuccessCode.EMPTY;
 		}
 
 		return containsInvalidInput ? SuccessCode.PARTIAL : SuccessCode.OK;

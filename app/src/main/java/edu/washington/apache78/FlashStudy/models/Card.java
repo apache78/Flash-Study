@@ -1,9 +1,11 @@
 package edu.washington.apache78.FlashStudy.models;
 
 /**
+<<<<<<< HEAD
  * Created by Stanley on 6/5/2015.
  */
 public class Card implements Comparable<Card>, Cloneable {
+	//since this is a model, we'll set these attributes to public
 	public String term;
 	public String definition;
 

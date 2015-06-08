@@ -9,8 +9,9 @@ import edu.washington.apache78.FlashStudy.models.*;
  */
 public abstract class NoteParser {
 	public enum SuccessCode {
-		OK,
-		PARTIAL
+		OK,              //everything worked
+		PARTIAL,        //some errors has been found and ignored
+		EMPTY           //an empty note has been supploed
 	};
 
 	protected String content = null;
