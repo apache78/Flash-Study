@@ -46,6 +46,10 @@
             android:name=".activities.RetrieveContentsWithProgressDialogActivity"
             android:label="@string/title_activity_retrieve_contents_with_progress_dialog" >
         </activity>
+        <activity
+            android:name=".activities.ConvertNoteActivity"
+            android:label="@string/title_activity_convert_note" >
+        </activity>
     </application>
 
 </manifest>

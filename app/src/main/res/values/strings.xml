@@ -19,4 +19,5 @@
         RetrieveContentsWithProgressDialogActivity
     </string>
     <string name="title_activity_retrieve_contents">RetrieveContentsActivity</string>
+    <string name="title_activity_convert_note">ConvertNoteActivity</string>
 </resources>

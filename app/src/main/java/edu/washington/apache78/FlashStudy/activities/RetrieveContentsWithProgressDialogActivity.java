@@ -134,18 +134,20 @@ public class RetrieveContentsWithProgressDialogActivity extends BaseDriveActivit
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            Intent driveAuthenticate = new Intent(RetrieveContentsWithProgressDialogActivity.this, MainActivity.class);
+
 
             if (result == null) {
-                showMessage("Error while reading from the file");
-
-                startActivity(driveAuthenticate);
+                showMessage("Error while reading from the file, please try again!");
+                Intent goBackToMainActivity = new Intent(RetrieveContentsWithProgressDialogActivity.this, MainActivity.class);
+                startActivity(goBackToMainActivity);
 
                 return;
             }
             showMessage("File contents: " + result);
+            Intent goToConvertNoteActivity = new Intent(RetrieveContentsWithProgressDialogActivity.this, ConvertNoteActivity.class);
+            goToConvertNoteActivity.putExtra("noteContent",result);
+            startActivity(goToConvertNoteActivity);
 
-            startActivity(driveAuthenticate);
 
 
         }
