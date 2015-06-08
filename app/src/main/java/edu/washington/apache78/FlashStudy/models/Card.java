@@ -1,7 +1,8 @@
 package edu.washington.apache78.FlashStudy.models;
 
+import org.json.*;
+
 /**
-<<<<<<< HEAD
  * Created by Stanley on 6/5/2015.
  */
 public class Card implements Comparable<Card>, Cloneable {
@@ -22,6 +23,16 @@ public class Card implements Comparable<Card>, Cloneable {
 	@Override
 	public int compareTo(Card another) {
 		return term.compareTo(another.term);
+	}
+
+	//JSONObject.toString returns string representation of the json
+	public JSONObject toJSON() {
+		JSONObject jo = new JSONObject();
+		try {
+			jo.put("term", term);
+			jo.put("definition", definition);
+		} catch (JSONException e) {}
+		return jo;
 	}
 
 	@Override

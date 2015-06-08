@@ -1,5 +1,7 @@
 package edu.washington.apache78.FlashStudy.models;
 
+import org.json.*;
+
 import java.util.ArrayList;
 
 /**
@@ -39,6 +41,24 @@ public class Note implements Cloneable, Comparable<Note> {
 		return (ArrayList<Card>)cards.clone();
 	}
 
+	//JSONObject.toString returns string representation of the json
+	public JSONObject toJSON() {
+		JSONObject noteObject = new JSONObject();
+		JSONArray cardsObject = new JSONArray();
+		try {
+			noteObject.put("title", title);
+			noteObject.put("description", description);
+
+			//insert cards
+			for(Card card : cards) {
+				cardsObject.put(card.toJSON());
+			}
+
+			//put cards in note
+			noteObject.put("cards", cardsObject);
+		} catch (JSONException e) { }
+		return noteObject;
+	}
 
 	@Override
 	public Object clone() {
