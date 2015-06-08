@@ -16,17 +16,12 @@
         android:hint="Note name"
         />
 
-    <EditText
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:id="@+id/noteContentBody"
-        android:paddingTop="30dp"
-        android:textSize="12sp"
-        android:hint="Note Content"
-        />
-
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:paddingTop="20dp"
+        android:id="@+id/noteContentBody" />
 
 
 </LinearLayout>

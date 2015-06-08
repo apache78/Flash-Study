@@ -7,13 +7,19 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import edu.washington.apache78.FlashStudy.R;
+import edu.washington.apache78.FlashStudy.models.Card;
 
 public class ConvertNoteActivity extends ActionBarActivity {
 
-    private EditText contentField;
+    TextView contentField;
+    EditText noteName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,14 +27,25 @@ public class ConvertNoteActivity extends ActionBarActivity {
         Intent receivedContent  = getIntent();
         String receivedTxt = receivedContent.getExtras().getString("noteContent");
 
-        contentField = (EditText) findViewById(R.id.noteContentBody);
+        contentField = (TextView) findViewById(R.id.noteContentBody);
+        noteName = (EditText) findViewById(R.id.noteName);
+
         contentField.setText(receivedTxt);
 
         String textStr[] = receivedTxt.split("[\r\n][\n]+");
 
-        for(int i=0; i<textStr.length; i++){
-            Log.i("====", textStr[i]);
+        ArrayList<Card> cardList = new ArrayList<>();
+
+        for(String card:textStr){
+            String cardLineString = card.replaceAll("\\r\\n|\\r|\\n", " ");
+            String[] cardData=cardLineString.split("\\:", 2);
+            Card cardObject = new Card(cardData[0],cardData[1]);
+            Log.i("===",cardObject.getTerm()+": "+cardObject.getDefinition());
         }
+
+
+
+
 
 
         Toast.makeText(this,String.valueOf(textStr.length), Toast.LENGTH_LONG).show();
