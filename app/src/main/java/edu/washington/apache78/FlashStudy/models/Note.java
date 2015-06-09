@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class Note implements Cloneable, Comparable<Note> {
 	//since this is a model, we'll set these attributes to public
 	public String title;
-	public String description;
 
 	private ArrayList<Card> cards = new ArrayList<Card>();
 
@@ -47,7 +46,6 @@ public class Note implements Cloneable, Comparable<Note> {
 		JSONArray cardsObject = new JSONArray();
 		try {
 			noteObject.put("title", title);
-			noteObject.put("description", description);
 
 			//insert cards
 			for(Card card : cards) {
@@ -64,7 +62,6 @@ public class Note implements Cloneable, Comparable<Note> {
 	public Object clone() {
 		Note note = new Note();
 		note.title = title;
-		note.description = description;
 		note.cards = getCards();			//this clones our cards
 		return note;
 	}

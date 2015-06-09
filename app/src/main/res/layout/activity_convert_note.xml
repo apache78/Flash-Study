@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:orientation="vertical"
@@ -17,17 +17,23 @@
         android:hint="Note name"
         />
 
-    <EditText
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
+        android:text="Get flash cards"
+        android:id="@+id/getFlashCards"
+        android:textColor="#FFFFFF"
+        android:background="@color/main_app_color"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:paddingTop="20dp"
         android:id="@+id/noteContentBody"
-        android:paddingTop="30dp"
-        android:textSize="12sp"
-        android:hint="Note Content"
-        />
-
-
-
-</LinearLayout>
+        android:layout_below="@+id/noteName"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/getFlashCards" />
+</RelativeLayout>

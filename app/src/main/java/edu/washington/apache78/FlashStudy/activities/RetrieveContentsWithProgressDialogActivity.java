@@ -80,7 +80,7 @@ public class RetrieveContentsWithProgressDialogActivity extends BaseDriveActivit
         // no files selected by the user.
         IntentSender intentSender = Drive.DriveApi
                 .newOpenFileActivityBuilder()
-                .setMimeType(new String[]{ "text/plain", "text/vnd.google-apps.document" })
+                .setMimeType(new String[]{ "text/plain"})
                 .build(getGoogleApiClient());
         try {
             startIntentSenderForResult(intentSender, REQUEST_CODE_OPENER, null, 0, 0, 0);
@@ -119,7 +119,7 @@ public class RetrieveContentsWithProgressDialogActivity extends BaseDriveActivit
             String line;
             try {
                 while ((line = reader.readLine()) != null) {
-                    builder.append(line);
+                    builder.append(line+"\n");
                 }
                 contents = builder.toString();
             } catch (IOException e) {
@@ -143,7 +143,7 @@ public class RetrieveContentsWithProgressDialogActivity extends BaseDriveActivit
 
                 return;
             }
-            showMessage("File contents: " + result);
+            //showMessage("File contents: " + result);
             Intent goToConvertNoteActivity = new Intent(RetrieveContentsWithProgressDialogActivity.this, ConvertNoteActivity.class);
             goToConvertNoteActivity.putExtra("noteContent",result);
             startActivity(goToConvertNoteActivity);
@@ -159,6 +159,8 @@ public class RetrieveContentsWithProgressDialogActivity extends BaseDriveActivit
             mSelectedFileDriveId = (DriveId) data.getParcelableExtra(
                     OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
 
+        } if(requestCode == 1) {
+            finish();
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
