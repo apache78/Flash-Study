@@ -3,6 +3,7 @@ package edu.washington.apache78.FlashStudy.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,10 +22,13 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -37,7 +41,7 @@ public class ConvertNoteActivity extends ActionBarActivity {
     EditText noteName;
     Button getFlashCards;
 
-    String filename;
+    String filenameString;
     String jsonString;
 
     @Override
@@ -95,25 +99,37 @@ public class ConvertNoteActivity extends ActionBarActivity {
         }
 
         //Saving JSONobject string internally
-
-        filename = noteName.getText().toString();
+        final String format = ".json";
+        filenameString = noteName.getText().toString();
         jsonString = NoteObjectJSON.toString();
-        FileOutputStream outputStream;
-//
-//        try {
-//            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-//            outputStream.write(jsonString.getBytes());
-//            outputStream.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+
 
         getFlashCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                createCacheFile(ConvertNoteActivity.this, filename, jsonString);
-                Toast.makeText(ConvertNoteActivity.this, "Successfully saved "+filename, Toast.LENGTH_LONG).show();
+                try {
+                    File SDCardRoot = Environment.getExternalStorageDirectory();
+                    File myFile = new File(SDCardRoot+"/FlashStudy","data.json");
+                    myFile.createNewFile();
+                    FileOutputStream fOut = new FileOutputStream(myFile);
+                    OutputStreamWriter myOutWriter =
+                            new OutputStreamWriter(fOut);
+                    myOutWriter.append(jsonString);
+                    myOutWriter.close();
+                    fOut.close();
+                    Toast.makeText(getBaseContext(),
+                            "Done writing SD",
+                            Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(getBaseContext(), e.getMessage(),
+                            Toast.LENGTH_SHORT).show();
+                }
+
+
+
+
+
             }
         });
 
@@ -148,43 +164,7 @@ public class ConvertNoteActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public File createCacheFile(Context context, String fileName, String json) {
-        File cacheFile = new File(context.getFilesDir(), fileName);
-        try {
-            FileWriter fw = new FileWriter(cacheFile);
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(json);
-            bw.close();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-
-            // on exception null will be returned
-            cacheFile = null;
-        }
-
-        return cacheFile;
-    }
-
-    public String readFile(File file) {
-        String fileContent = "";
-        try {
-            String currentLine;
-            BufferedReader br = new BufferedReader(new FileReader(file));
-
-            while ((currentLine = br.readLine()) != null) {
-                fileContent += currentLine + '\n';
-            }
-
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-
-            // on exception null will be returned
-            fileContent = null;
-        }
-        return fileContent;
-    }
 
 
 
