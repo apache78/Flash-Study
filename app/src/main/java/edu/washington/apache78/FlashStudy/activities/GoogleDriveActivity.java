@@ -83,8 +83,8 @@ public class GoogleDriveActivity extends Activity implements GoogleApiClient.Con
     @Override
     public void onConnected(Bundle connectionHint) {
         Log.i(TAG, "API client connected.");
-        Intent retrieveContents = new Intent(GoogleDriveActivity.this, RetrieveContentsWithProgressDialogActivity.class);
-        startActivity(retrieveContents);
+        //Intent retrieveContents = new Intent(GoogleDriveActivity.this, RetrieveContentsWithProgressDialogActivity.class);
+        //startActivity(retrieveContents);
 
     }
 
