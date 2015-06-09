@@ -13,6 +13,7 @@ import java.util.List;
 
 import edu.washington.apache78.FlashStudy.R;
 import edu.washington.apache78.FlashStudy.includes.NotesManager;
+import edu.washington.apache78.FlashStudy.models.Card;
 import edu.washington.apache78.FlashStudy.models.Note;
 
 /**
@@ -24,10 +25,10 @@ public class CardAdapter extends BaseAdapter {
 
     public CardAdapter(Context context) {
         NotesManager flashcards = NotesManager.getInstance();
-        List<Note> FlashCards = flashcards.getNotes();
+        List<Card> FlashCards = flashcards.getNotes().get(0).getCards();
         Terms = new String[FlashCards.size()];
         for(int i = 0; i<FlashCards.size();i++){
-            Terms[i] = FlashCards.get(i).title;
+            Terms[i] = FlashCards.get(i).term;
 
         }
         mContext = context;
