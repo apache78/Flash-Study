@@ -29,7 +29,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:focusable="true"
-        android:layout_marginTop="3dp" />
+        android:layout_marginTop="3dp"
+        android:textColor="#FFFFFF" />
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -43,6 +44,7 @@
         android:layout_height="wrap_content"
         android:text="Prev. Term"
         android:id="@+id/btnPrev"
+        android:textColor="#FFFFFF"
         android:background="@color/main_app_color"
         android:layout_weight="0.7"
         android:layout_gravity="left|center_vertical"
@@ -57,6 +59,7 @@
         android:layout_height="wrap_content"
         android:text="Next Term"
         android:id="@+id/btnNext"
+        android:textColor="#FFFFFF"
         android:background="@color/main_app_color"
         android:layout_above="@+id/btnDefintion"
         android:layout_alignParentRight="true"

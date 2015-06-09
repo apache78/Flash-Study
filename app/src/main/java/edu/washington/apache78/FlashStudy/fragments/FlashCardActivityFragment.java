@@ -51,7 +51,7 @@ public class FlashCardActivityFragment extends Fragment {
 							TermFragment termFragment = new TermFragment();
 							termFragment.setArguments(bundle);
 
-							FlashCardActivityFragment.this.getActivity().getFragmentManager().beginTransaction().remove(FlashCardActivityFragment.this).commit();
+							FlashCardActivityFragment.this.getActivity().getFragmentManager().beginTransaction().replace(R.id.fragment_container, termFragment).commit();
 						}
 					}
 				});
