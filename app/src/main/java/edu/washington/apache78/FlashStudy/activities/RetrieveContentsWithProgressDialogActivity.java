@@ -159,6 +159,8 @@ public class RetrieveContentsWithProgressDialogActivity extends BaseDriveActivit
             mSelectedFileDriveId = (DriveId) data.getParcelableExtra(
                     OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
 
+        } if(requestCode == 1) {
+            finish();
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }

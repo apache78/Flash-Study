@@ -16,29 +16,16 @@ public class NoteTxtParser extends NoteParser {
 		note = new Note();
 		Scanner s = new Scanner(content);
 
-		//get note title
-		String[] tokens = s.nextLine().split(":", 2);
-		if(tokens.length != 2 || !tokens[0].trim().toLowerCase().equals("title")) {
-			throw new NoteParserException();
-		}
-		note.title = tokens[1].trim();
-
-		//get note description
-		tokens = s.nextLine().split(":", 2);
-		if(tokens.length != 2 || !tokens[0].trim().toLowerCase().equals("description")) {
-			throw new NoteParserException();
-		}
-		note.title = tokens[1].trim();
-
-		//we should have a blank line here
-		if(!s.nextLine().equals("")) {
-			throw new NoteParserException();
-		}
-
 		//parse vocab:definition
 		boolean containsInvalidInput = false;
 		while(s.hasNextLine()) {
-			tokens = s.nextLine().split(":", 2);
+            String line = s.nextLine();
+            if(line.equals("")) {
+                //skip line
+                continue;
+            }
+
+			String[] tokens = line.split(":", 2);
 			if(tokens.length != 2) {
 				containsInvalidInput = true;
 				continue;
@@ -49,7 +36,7 @@ public class NoteTxtParser extends NoteParser {
 			while(s.hasNextLine()) {
 				String nextLine = s.nextLine();
 				if(!nextLine.equals("")) {
-					sbDef.append(nextLine);
+					sbDef.append(nextLine + "\n");
 				} else {
 					//we're moving on to the next term:def set
 					break;

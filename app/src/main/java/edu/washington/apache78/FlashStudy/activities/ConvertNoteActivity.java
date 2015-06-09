@@ -10,6 +10,7 @@ import android.widget.*;
 import java.io.*;
 
 import edu.washington.apache78.FlashStudy.R;
+import edu.washington.apache78.FlashStudy.includes.NotesManager;
 import edu.washington.apache78.FlashStudy.includes.parsers.NoteParser;
 import edu.washington.apache78.FlashStudy.includes.parsers.NoteParserException;
 import edu.washington.apache78.FlashStudy.includes.parsers.NoteTxtParser;
@@ -24,7 +25,7 @@ public class ConvertNoteActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_convert_note);
 		Intent receivedContent  = getIntent();
 
-		String noteContent = receivedContent.getExtras().getString("noteContent");
+		final String noteContent = receivedContent.getExtras().getString("noteContent");
 		contentField = (TextView)findViewById(R.id.noteContentBody);
 		contentField.setText(noteContent);
 /*import android.util.Log;
@@ -126,19 +127,34 @@ public class ConvertNoteActivity extends ActionBarActivity {
 
         //Toast.makeText(this, String.valueOf(textStr.length), Toast.LENGTH_LONG).show();*/
 
-		try {
-			NoteParser parser = new NoteTxtParser();
-			NoteParser.SuccessCode code = parser.parse(noteContent);
-			Note note = parser.getNote();
+        ((Button)findViewById(R.id.getFlashCards)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-			if(code == NoteParser.SuccessCode.OK) {
-				Toast.makeText(this, "File successfully parsed!", Toast.LENGTH_SHORT).show();
-			} else if(code == NoteParser.SuccessCode.PARTIAL) {
-				Toast.makeText(this, "Although there were some error, file has been successfully parsed!", Toast.LENGTH_SHORT).show();
-			}
-		} catch(NoteParserException e) {
-			Toast.makeText(this, "Parsing failed", Toast.LENGTH_SHORT).show();
-		}
+                try {
+                    NoteParser parser = new NoteTxtParser();
+                    NoteParser.SuccessCode code = parser.parse(noteContent);
+                    Note note = parser.getNote();
+                    note.title = ((EditText)findViewById(R.id.noteName)).getText().toString();
+                    NotesManager.getInstance().addNote(note);
+
+                    if(code == NoteParser.SuccessCode.OK) {
+                        Toast.makeText(ConvertNoteActivity.this, "File successfully parsed!", Toast.LENGTH_SHORT).show();
+                    } else if(code == NoteParser.SuccessCode.PARTIAL) {
+                        Toast.makeText(ConvertNoteActivity.this, "Although there were some error, file has been successfully parsed!", Toast.LENGTH_SHORT).show();
+                    }
+                } catch(NoteParserException e) {
+                    Toast.makeText(ConvertNoteActivity.this, "Parsing failed", Toast.LENGTH_SHORT).show();
+                }
+
+
+                ConvertNoteActivity.this.finish();
+                //createCacheFile(ConvertNoteActivity.this, filename, jsonString);
+                //Toast.makeText(ConvertNoteActivity.this, "Successfully saved "+filename, Toast.LENGTH_LONG).show();
+            }
+        });
+
+
 	}
 
 	@Override
