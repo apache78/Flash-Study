@@ -35,6 +35,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
 
+
         CardList = (ListView) findViewById(R.id.listView);
         ArrayAdapter<String> items = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Terms);
         CardList.setAdapter(items);
@@ -45,7 +46,7 @@ public class MainActivity extends ActionBarActivity {
         driveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent driveAuthenticate = new Intent(MainActivity.this, GoogleDriveActivity.class);
+                Intent driveAuthenticate = new Intent(MainActivity.this, RetrieveContentsWithProgressDialogActivity.class);
                 startActivity(driveAuthenticate);
             }
         });

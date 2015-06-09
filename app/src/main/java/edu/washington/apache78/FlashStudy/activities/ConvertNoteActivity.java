@@ -148,9 +148,10 @@ public class ConvertNoteActivity extends ActionBarActivity {
                 }
 
 
-                ConvertNoteActivity.this.finish();
-                //createCacheFile(ConvertNoteActivity.this, filename, jsonString);
-                //Toast.makeText(ConvertNoteActivity.this, "Successfully saved "+filename, Toast.LENGTH_LONG).show();
+                //every works!
+                Intent i = new Intent(ConvertNoteActivity.this, MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
             }
         });
 

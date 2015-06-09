@@ -64,7 +64,6 @@ public class RetrieveContentsWithProgressDialogActivity extends BaseDriveActivit
     @Override
     public void onConnected(Bundle connectionHint) {
         super.onConnected(connectionHint);
-
         // If there is a selected file, open its contents.
         if (mSelectedFileDriveId != null) {
 
@@ -159,6 +158,16 @@ public class RetrieveContentsWithProgressDialogActivity extends BaseDriveActivit
             mSelectedFileDriveId = (DriveId) data.getParcelableExtra(
                     OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
 
+            // If there is a selected file, open its contents.
+            if (mSelectedFileDriveId != null) {
+
+                //showMessage("File ID: "+mSelectedFileDriveId.encodeToString());
+
+                Drive.DriveApi.fetchDriveId(getGoogleApiClient(), mSelectedFileDriveId.getResourceId()).setResultCallback(idCallback);
+
+                return;
+
+            }
         } if(requestCode == 1) {
             finish();
         } else {
