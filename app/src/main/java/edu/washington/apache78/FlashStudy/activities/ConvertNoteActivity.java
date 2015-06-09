@@ -1,11 +1,15 @@
 package edu.washington.apache78.FlashStudy.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +18,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -24,6 +35,10 @@ public class ConvertNoteActivity extends ActionBarActivity {
 
     TextView contentField;
     EditText noteName;
+    Button getFlashCards;
+
+    String filename;
+    String jsonString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +49,7 @@ public class ConvertNoteActivity extends ActionBarActivity {
 
         contentField = (TextView) findViewById(R.id.noteContentBody);
         noteName = (EditText) findViewById(R.id.noteName);
+        getFlashCards = (Button) findViewById(R.id.getFlashCards);
 
         contentField.setText(receivedTxt);
 
@@ -42,6 +58,7 @@ public class ConvertNoteActivity extends ActionBarActivity {
         ArrayList<Card> cardList = new ArrayList<>();
 
         for(String card:textStr){
+
             String cardLineString = card.replaceAll("\\r\\n|\\r|\\n", " ");
             String[] cardData=cardLineString.split("\\:", 2);
             Card cardObject = new Card(cardData[0],cardData[1]);
@@ -51,7 +68,7 @@ public class ConvertNoteActivity extends ActionBarActivity {
         }
 
 
-
+        //Turning cardList into JSON object
         JSONObject NoteObjectJSON = new JSONObject();
         try {
 
@@ -77,13 +94,34 @@ public class ConvertNoteActivity extends ActionBarActivity {
             e.printStackTrace();
         }
 
+        //Saving JSONobject string internally
+
+        filename = noteName.getText().toString();
+        jsonString = NoteObjectJSON.toString();
+        FileOutputStream outputStream;
+//
+//        try {
+//            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+//            outputStream.write(jsonString.getBytes());
+//            outputStream.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+        getFlashCards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                createCacheFile(ConvertNoteActivity.this, filename, jsonString);
+                Toast.makeText(ConvertNoteActivity.this, "Successfully saved "+filename, Toast.LENGTH_LONG).show();
+            }
+        });
 
 
 
 
 
-
-        Toast.makeText(this, String.valueOf(textStr.length), Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, String.valueOf(textStr.length), Toast.LENGTH_LONG).show();
 
 
     }
@@ -109,8 +147,46 @@ public class ConvertNoteActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    private static int countLines(String str){
-        String[] lines = str.split("\r\n|\r|\n");
-        return  lines.length;
+
+    public File createCacheFile(Context context, String fileName, String json) {
+        File cacheFile = new File(context.getFilesDir(), fileName);
+        try {
+            FileWriter fw = new FileWriter(cacheFile);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(json);
+            bw.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            // on exception null will be returned
+            cacheFile = null;
+        }
+
+        return cacheFile;
     }
+
+    public String readFile(File file) {
+        String fileContent = "";
+        try {
+            String currentLine;
+            BufferedReader br = new BufferedReader(new FileReader(file));
+
+            while ((currentLine = br.readLine()) != null) {
+                fileContent += currentLine + '\n';
+            }
+
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            // on exception null will be returned
+            fileContent = null;
+        }
+        return fileContent;
+    }
+
+
+
+
 }
