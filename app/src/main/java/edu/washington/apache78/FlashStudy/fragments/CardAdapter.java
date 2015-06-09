@@ -14,7 +14,6 @@ import java.util.List;
 import edu.washington.apache78.FlashStudy.R;
 import edu.washington.apache78.FlashStudy.includes.NotesManager;
 import edu.washington.apache78.FlashStudy.models.Card;
-import edu.washington.apache78.FlashStudy.models.Note;
 
 /**
  * Created by apache78 on 6/8/2015.
@@ -29,7 +28,6 @@ public class CardAdapter extends BaseAdapter {
         Terms = new String[FlashCards.size()];
         for(int i = 0; i<FlashCards.size();i++){
             Terms[i] = FlashCards.get(i).term;
-
         }
         mContext = context;
     }
