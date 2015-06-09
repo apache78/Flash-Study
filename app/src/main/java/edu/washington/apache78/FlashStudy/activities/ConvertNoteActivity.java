@@ -110,17 +110,26 @@ public class ConvertNoteActivity extends ActionBarActivity {
 
                 try {
                     File SDCardRoot = Environment.getExternalStorageDirectory();
-                    File myFile = new File(SDCardRoot+"/FlashStudy","data.json");
-                    myFile.createNewFile();
-                    FileOutputStream fOut = new FileOutputStream(myFile);
-                    OutputStreamWriter myOutWriter =
-                            new OutputStreamWriter(fOut);
-                    myOutWriter.append(jsonString);
-                    myOutWriter.close();
-                    fOut.close();
-                    Toast.makeText(getBaseContext(),
-                            "Done writing SD",
-                            Toast.LENGTH_SHORT).show();
+                    File myDir = new File(SDCardRoot,"FlashStudy");
+                    if (!myDir.exists()) {
+                        myDir.mkdir();
+                    }
+                    try {
+                        File file = new File(myDir, "data" + ".json");
+                        file.createNewFile();
+                        FileOutputStream fOut = new FileOutputStream(file);
+                        OutputStreamWriter myOutWriter =
+                                new OutputStreamWriter(fOut);
+                        myOutWriter.append(jsonString);
+                        myOutWriter.close();
+                        fOut.close();
+                        Toast.makeText(getBaseContext(),
+                                "Done writing SD",
+                                Toast.LENGTH_SHORT).show();
+                    } catch (Exception ex) {
+                        System.out.println("ex: " + ex);
+                    }
+
                 } catch (Exception e) {
                     Toast.makeText(getBaseContext(), e.getMessage(),
                             Toast.LENGTH_SHORT).show();
