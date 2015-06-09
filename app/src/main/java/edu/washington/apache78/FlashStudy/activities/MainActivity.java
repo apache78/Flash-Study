@@ -57,7 +57,6 @@ public class MainActivity extends ActionBarActivity {
                 String selected = (String) (CardList.getItemAtPosition(position));
                 next.putExtra("SELECTED", selected);
                 startActivity(next);
-                finish();
             }
         });
     }
