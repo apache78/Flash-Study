@@ -10,7 +10,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import edu.washington.apache78.FlashStudy.R;
 import edu.washington.apache78.FlashStudy.models.Card;
@@ -40,7 +45,36 @@ public class ConvertNoteActivity extends ActionBarActivity {
             String cardLineString = card.replaceAll("\\r\\n|\\r|\\n", " ");
             String[] cardData=cardLineString.split("\\:", 2);
             Card cardObject = new Card(cardData[0],cardData[1]);
-            Log.i("===",cardObject.getTerm()+": "+cardObject.getDefinition());
+            cardList.add(cardObject);
+            //Log.i("===",cardObject.getTerm()+": "+cardObject.getDefinition());
+
+        }
+
+
+
+        JSONObject NoteObjectJSON = new JSONObject();
+        try {
+
+            NoteObjectJSON.put("noteName",noteName.getText());
+
+            JSONArray jsonArray = new JSONArray();
+
+
+            for(Card singleCard:cardList){
+                JSONObject cardObjectJSON = new JSONObject();
+                cardObjectJSON.put("term", singleCard.getTerm());
+                cardObjectJSON.put("definition", singleCard.getDefinition());
+                jsonArray.put(cardObjectJSON);
+
+            }
+            NoteObjectJSON.put("cards", jsonArray);
+            Log.i("===", NoteObjectJSON.toString());
+
+
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
 
 
@@ -48,7 +82,8 @@ public class ConvertNoteActivity extends ActionBarActivity {
 
 
 
-        Toast.makeText(this,String.valueOf(textStr.length), Toast.LENGTH_LONG).show();
+
+        Toast.makeText(this, String.valueOf(textStr.length), Toast.LENGTH_LONG).show();
 
 
     }
