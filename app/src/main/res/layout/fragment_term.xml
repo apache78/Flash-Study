@@ -6,9 +6,11 @@
     <!-- TODO: Update blank fragment layout -->
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/termText"/>
+        android:id="@+id/termText"
+        android:textSize="35dp"
+        android:text="Term" />
 </FrameLayout>

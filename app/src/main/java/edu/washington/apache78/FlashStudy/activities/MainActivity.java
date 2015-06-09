@@ -1,20 +1,38 @@
 package edu.washington.apache78.FlashStudy.activities;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.*;
-import android.widget.*;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 
 import edu.washington.apache78.FlashStudy.R;
 
 public class MainActivity extends ActionBarActivity {
+    String[] Terms = new String[]{"FUCK", "ANDROID", "STUDIO"};
     Button driveButton;
+    ListView CardList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().setElevation(0);
+//        NotesManager flashcards = new NotesManager();
+//        List<Note> Terms1 = flashcards.getNotes();
+//        Terms = new String[Terms1.size()];
+//        for(int i = 0 ; i< Terms1.size(); i++){
+//            Terms[i] = Terms1.get(i).title;
+//        }
+
+
+        CardList = (ListView) findViewById(R.id.listView);
+        ArrayAdapter<String> items = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Terms);
+        CardList.setAdapter(items);
         // Enable Local Datastore.
 
         driveButton = (Button) findViewById(R.id.driveButton);
@@ -24,6 +42,17 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 Intent driveAuthenticate = new Intent(MainActivity.this, GoogleDriveActivity.class);
                 startActivity(driveAuthenticate);
+            }
+        });
+
+
+        CardList.setOnItemClickListener(new ListView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent next = new Intent(MainActivity.this, FlashCardActivity.class);
+                String selected = (String) (CardList.getItemAtPosition(position));
+                next.putExtra("SELECTED", selected);
+                startActivity(next);
+                finish();
             }
         });
     }

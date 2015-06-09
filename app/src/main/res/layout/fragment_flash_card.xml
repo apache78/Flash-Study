@@ -7,11 +7,34 @@
     tools:context="edu.washington.apache78.FlashStudy.fragments.FlashCardActivityFragment">
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Go"
+        android:text="Start Flash Card Review"
         android:id="@+id/startFlashCard"
+        android:background="@color/main_app_color"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="#FFFFFF" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/startFlashCard">
+
+        <GridView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/gridView"
+            android:layout_row="0"
+            android:layout_column="11"
+            android:columnWidth="200dp"
+            android:numColumns="2"
+            android:stretchMode="columnWidth"
+            android:textAlignment="center"
+            android:verticalSpacing="5dp"
+            android:horizontalSpacing="10dp"
+            android:transitionGroup="false" />
+    </GridLayout>
 </RelativeLayout>
