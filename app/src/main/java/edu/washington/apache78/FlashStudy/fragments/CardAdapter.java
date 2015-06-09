@@ -9,7 +9,11 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import edu.washington.apache78.FlashStudy.R;
+import edu.washington.apache78.FlashStudy.includes.NotesManager;
+import edu.washington.apache78.FlashStudy.models.Note;
 
 /**
  * Created by apache78 on 6/8/2015.
@@ -17,7 +21,15 @@ import edu.washington.apache78.FlashStudy.R;
 public class CardAdapter extends BaseAdapter {
     Context mContext;
     String[] Terms = new String[] {"Term1", "Term2", "Term3","Term4","Term5","Term6"};
+
     public CardAdapter(Context context) {
+        NotesManager flashcards = NotesManager.getInstance();
+        List<Note> FlashCards = flashcards.getNotes();
+        Terms = new String[FlashCards.size()];
+        for(int i = 0; i<FlashCards.size();i++){
+            Terms[i] = FlashCards.get(i).title;
+
+        }
         mContext = context;
     }
     @Override
