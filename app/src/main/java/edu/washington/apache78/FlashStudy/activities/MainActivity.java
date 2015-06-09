@@ -11,7 +11,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.util.List;
+
 import edu.washington.apache78.FlashStudy.R;
+import edu.washington.apache78.FlashStudy.includes.NotesManager;
+import edu.washington.apache78.FlashStudy.models.Note;
 
 public class MainActivity extends ActionBarActivity {
     String[] Terms = new String[]{"FUCK", "ANDROID", "STUDIO"};
@@ -22,12 +26,13 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().setElevation(0);
-//        NotesManager flashcards = new NotesManager();
-//        List<Note> Terms1 = flashcards.getNotes();
-//        Terms = new String[Terms1.size()];
-//        for(int i = 0 ; i< Terms1.size(); i++){
-//            Terms[i] = Terms1.get(i).title;
-//        }
+        NotesManager flashcards = NotesManager.getInstance();
+        List<Note> FlashCards = flashcards.getNotes();
+        Terms = new String[FlashCards.size()];
+        for(int i = 0; i<FlashCards.size();i++){
+            Terms[i] = FlashCards.get(i).title;
+
+        }
 
 
 
@@ -53,7 +58,6 @@ public class MainActivity extends ActionBarActivity {
                 String selected = (String) (CardList.getItemAtPosition(position));
                 next.putExtra("SELECTED", selected);
                 startActivity(next);
-                finish();
             }
         });
     }
