@@ -63,7 +63,7 @@ public class NoteProgress implements Serializable {
 
 	//if this is the last card in the note
 	public boolean isLastCard() {
-		return currentCardIndex < cards.size();
+		return currentCardIndex >= cards.size() - 1;
 	}
 
 	//advance the current card pointer to the next card

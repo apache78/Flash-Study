@@ -1,15 +1,19 @@
 package edu.washington.apache78.FlashStudy.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import edu.washington.apache78.FlashStudy.R;
+import edu.washington.apache78.FlashStudy.activities.MainActivity;
 import edu.washington.apache78.FlashStudy.includes.NoteProgress;
 import edu.washington.apache78.FlashStudy.includes.NotesManager;
 import edu.washington.apache78.FlashStudy.models.Note;
@@ -75,12 +79,33 @@ public class DefinitionFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_definition, container, false);
 
 
-        NoteProgress progress = (NoteProgress) getArguments().getSerializable("progress");
+        final NoteProgress progress = (NoteProgress) getArguments().getSerializable("progress");
+
+        if(progress.isLastCard())
+            ((Button)v.findViewById(R.id.btnDefNextTerm)).setText("Finish");
 
         definitionText = (TextView) v.findViewById(R.id.definitionText);
 
         definitionText.setText(progress.getCurrentCard().definition);
 
+        ((Button)v.findViewById(R.id.btnDefNextTerm)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(progress.isLastCard()) {
+                    //DefinitionFragment.this.getActivity().getFragmentManager().beginTransaction().remove(DefinitionFragment.this).commit();
+                    DefinitionFragment.this.getActivity().finish();
+                } else {
+                    progress.nextCard();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("progress", progress);
+
+                    TermFragment termFragment = new TermFragment();
+                    termFragment.setArguments(bundle);
+
+                    DefinitionFragment.this.getActivity().getFragmentManager().beginTransaction().replace(R.id.fragment_container, termFragment).commit();
+                }
+            }
+        });
         // Inflate the layout for this fragment
         return v;
     }

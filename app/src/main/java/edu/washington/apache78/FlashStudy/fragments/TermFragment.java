@@ -34,36 +34,34 @@ public class TermFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_term, container, false);
 		last = false;
 
-		prev = (Button) v.findViewById(R.id.btnPrev);
-		next = (Button) v.findViewById(R.id.btnNext);
+		//prev = (Button) v.findViewById(R.id.btnPrev);
+		//next = (Button) v.findViewById(R.id.btnNext);
 		definition = (Button) v.findViewById(R.id.btnDefintion);
 
-		prev.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-					Log.i("===","PREVIOUS");
-			}
-		});
+//		prev.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//					Log.i("===","PREVIOUS");
+//			}
+//		});
 
-		next.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Log.i("===","Next");
-			}
-		});
+//		next.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				Log.i("===","Next");
+//			}
+//		});
+
+		NoteProgress progress_ = (NoteProgress)getArguments().getSerializable("progress");
+		if(progress_ == null) {
+			progress_ = new NoteProgress(NotesManager.getInstance().getNotes().get(0));
+		}
+		final NoteProgress progress = progress_;
 
 		definition.setOnClickListener(new View.OnClickListener() {
 
-
-
 			@Override
 			public void onClick(View v) {
-
-				Log.i("===", "definition");
-				NotesManager nm = NotesManager.getInstance();
-				Note a = nm.getNotes().get(0);
-				NoteProgress progress = new NoteProgress(nm.getNotes().get(0));
-
 				Bundle bundle = new Bundle();
 				bundle.putSerializable("progress", progress);
 
@@ -79,7 +77,6 @@ public class TermFragment extends Fragment {
 			v.findViewById(R.id.btnDefNextTerm).setVisibility(View.GONE);
 			v.findViewById(R.id.btnDone).setVisibility(View.VISIBLE);
 		}
-		NoteProgress progress = (NoteProgress)getArguments().getSerializable("progress");
         ((TextView)v.findViewById(R.id.termText)).setText(progress.getCurrentCard().term);
 
 		return v;
