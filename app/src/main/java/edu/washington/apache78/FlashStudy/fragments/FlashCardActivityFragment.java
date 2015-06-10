@@ -19,8 +19,7 @@ import edu.washington.apache78.FlashStudy.models.Note;
  */
 public class FlashCardActivityFragment extends Fragment {
 
-	public FlashCardActivityFragment() {
-	}
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

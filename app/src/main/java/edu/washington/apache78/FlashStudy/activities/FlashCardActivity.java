@@ -1,15 +1,17 @@
 package edu.washington.apache78.FlashStudy.activities;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import edu.washington.apache78.FlashStudy.R;
+import edu.washington.apache78.FlashStudy.fragments.DefinitionFragment;
 import edu.washington.apache78.FlashStudy.fragments.FlashCardActivityFragment;
 
 
-public class FlashCardActivity extends ActionBarActivity {
+public class FlashCardActivity extends ActionBarActivity implements DefinitionFragment.OnFragmentInteractionListener{
 
 
     @Override
@@ -61,5 +63,10 @@ public class FlashCardActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

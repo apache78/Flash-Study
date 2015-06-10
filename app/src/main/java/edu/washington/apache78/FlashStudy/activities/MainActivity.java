@@ -31,7 +31,6 @@ public class MainActivity extends ActionBarActivity {
         Terms = new String[FlashCards.size()];
         for(int i = 0; i<FlashCards.size();i++){
             Terms[i] = FlashCards.get(i).title;
-
         }
 
 
