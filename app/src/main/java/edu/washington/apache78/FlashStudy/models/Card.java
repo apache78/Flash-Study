@@ -20,6 +20,16 @@ public class Card implements Comparable<Card>, Cloneable {
 		this.definition = definition;
 	}
 
+	public Card(JSONObject jsonObj) {
+		try {
+			term = jsonObj.getString("term");
+			definition = jsonObj.getString("definition");
+		} catch (JSONException e) {
+			term = "";
+			definition = "";
+		}
+	}
+
 	@Override
 	public int compareTo(Card another) {
 		return term.compareTo(another.term);

@@ -14,6 +14,19 @@ public class Note implements Cloneable, Comparable<Note> {
 
 	private ArrayList<Card> cards = new ArrayList<Card>();
 
+	public Note() { }
+
+	public Note(JSONObject jsonObj) {
+		try {
+			title = jsonObj.getString("title");
+			JSONArray cardsJSON = jsonObj.getJSONArray("cards");
+			for (int i = 0; i < cardsJSON.length(); ++i) {
+				JSONObject obj = cardsJSON.getJSONObject(i);
+				cards.add(new Card(obj));
+			}
+		} catch (JSONException e) { }
+	}
+
 	public boolean containCard(String term) {
 		return cards.contains(new Card(term));
 	}
